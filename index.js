@@ -20,6 +20,14 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+app.get("/", (req, res) => {
+  res.send("Backend is live");
+});
+
+app.get("/test", (req, res) => {
+  res.json({ message: "Test route working " });
+});
+
 
 app.get("/allHoldings", async (req, res) => {
   let allHoldings = await HoldingsModel.find({});
