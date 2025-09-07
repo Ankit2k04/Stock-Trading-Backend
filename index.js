@@ -18,10 +18,15 @@ const authRoutes = require('./routes/auth');
 const app = express();
 
 app.use(cors({
-  origin: "https://stock-trading-frontend-sigma.vercel.app",
+  origin: [
+    "http://localhost:3000",
+    "https://stock-trading-frontend-sigma.vercel.app",
+    "https://stock-trading-dashboard-two.vercel.app"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 }));
+
 
 app.use(bodyParser.json());
 
@@ -64,13 +69,3 @@ app.listen(PORT, () => {
   mongoose.connect(uri);
   console.log("DB started!");
 });
-
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => {
-  console.log("DB connected!");
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-})
-.catch(err => console.error("DB connection error:", err));
